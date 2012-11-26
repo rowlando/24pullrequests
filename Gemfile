@@ -11,6 +11,12 @@ gem 'haml-rails'
 gem 'octokit'
 gem "bugsnag"
 gem 'newrelic_rpm'
+gem 'jquery-rails'
+gem "less-rails"
+gem "twitter-bootstrap-rails"
+gem 'simple_form'
+gem 'rack-google-analytics'
+gem 'values'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -24,14 +30,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 
 end
-
-gem 'jquery-rails'
-
-gem "less-rails"
-gem "twitter-bootstrap-rails"
-gem 'simple_form'
-
-gem 'rack-google-analytics'
 
 # I'm using mysql for dev (baris)
 group :development do
@@ -47,7 +45,10 @@ group :development do
   gem 'rb-fsevent', '~> 0.9.1'
 end
 
-gem "rspec-rails", :group => [:test, :development]
+group :test, :development do
+  gem "rspec", "~> 2.11.0"
+  gem "rspec-rails"
+end
 
 group :test do
   gem "factory_girl_rails"

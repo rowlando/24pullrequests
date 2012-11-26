@@ -14,7 +14,7 @@ describe Gift do
                            :pull_request => user.pull_requests.first,
                            :date => Date.parse("2012-12-1"))
     second_gift.should_not be_valid
-    second_gift.errors[:date].should == ["You only need one gift per day. Save it for tomorrow!"]
+    second_gift.errors[:date].should == ["you only need one gift per day. Save it for tomorrow!"]
   end
 
   it "helps rails by returning its date for #to_param" do
@@ -28,6 +28,12 @@ describe Gift do
                        :pull_request => user.pull_requests.first,
                        :date => date)
 
+
     Gift.find(user, date).should == gift
+  end
+
+  it "has a default date when created" do
+    Gift.default_date = ->{ Date.parse('2012-12-1') }
+    Gift.new.date.should == Date.parse('2012-12-1')
   end
 end

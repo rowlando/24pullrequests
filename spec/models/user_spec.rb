@@ -1,14 +1,19 @@
 require 'spec_helper'
+require 'ostruct'
 
 describe User do
-  it "searches it's gifts by date" do
-    gifts = mock('gifts', :find => mock('gift'))
-    date  = Date.parse('2012-12-1')
+  fixtures :users
 
-    user = User.new
-    user.stub(:gifts => gifts)
-    gifts.should_receive(:find).with(user, date)
+  subject(:user) { User.find('clowder') }
 
-    user.gift_for(date)
+  it "creates new gifts that belong to itself" do
+    user.new_gift.user.should == user
+  end
+
+  it "forwards attributes to newly created gifts" do
+    gift_factory = ->(attrs) { OpenStruct.new(attrs) }
+    user.gift_factory = gift_factory
+
+    user.new_gift(:foo => 'bar').foo.should == 'bar'
   end
 end

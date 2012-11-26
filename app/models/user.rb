@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessible :uid, :provider, :nickname, :email, :gravatar_id, :token, :email_frequency
+  attr_accessible :uid, :provider, :nickname, :email, :gravatar_id, :token,
+    :email_frequency
+
+  attr_writer :gift_factory
 
   has_many :pull_requests
   has_many :gifts
@@ -21,8 +24,14 @@ class User < ActiveRecord::Base
     where(:nickname => nickname).first!
   end
 
+  def new_gift(attrs={})
+    gift = gift_factory.call(attrs)
+    gift.user = self
+    gift
+  end
+
   def gift_for(date)
-    gifts.find(self, date)
+    Gift.find(id, date)
   end
 
   def send_regular_emails?
@@ -60,5 +69,9 @@ class User < ActiveRecord::Base
       :email => email,
       :gravatar_id => gravatar_id
     }
+  end
+
+  def gift_factory
+    @gift_factory ||= ->(attrs) { Gift.new(attrs) }
   end
 end

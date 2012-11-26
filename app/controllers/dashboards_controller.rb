@@ -4,8 +4,18 @@ class DashboardsController < ApplicationController
 
   def show
     pull_requests = current_user.pull_requests
-    projects = Project.limit(100).sample(12).sort_by(&:name)
-    render :show, :locals => { :user => current_user, :pull_requests => pull_requests, :projects => projects }
+    projects      = Project.limit(100).sample(12).sort_by(&:name)
+    gifted_today  = current_user.gift_for(Time.zone.now.to_date)
+
+    unless gifted_today
+      gift_form = GiftForm.new(:gift => current_user.new_gift,
+                               :pull_requests => pull_requests)
+    end
+
+    render :show, :locals => { :user => current_user,
+                               :pull_requests => pull_requests,
+                               :projects => projects,
+                               :gift_form => gift_form }
   end
 
   def update_email

@@ -1,0 +1,13 @@
+= render :partial => 'form', :locals => { :gift_form => gift_form }
+
+%dl
+  - gift_collection.each_with_day do |date, gift|
+    %dt
+      = date
+    - if gift
+      %dd
+        = gift.pull_request_title
+    - else
+      %dd Nothing Gifted Yet!
+
+
