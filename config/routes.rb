@@ -1,4 +1,7 @@
 Tfpullrequests::Application.routes.draw do
+  resources :gifts
+
+
   resources :users
   resources :projects, :only => [:index, :new, :create]
   resource  :dashboard # Singular, only applies to current user

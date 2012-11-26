@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :uid, :provider, :nickname, :email, :gravatar_id, :token, :email_frequency
 
   has_many :pull_requests
+  has_many :gifts
 
   after_create :download_pull_requests
 
@@ -18,6 +19,10 @@ class User < ActiveRecord::Base
 
   def self.find(nickname)
     where(:nickname => nickname).first!
+  end
+
+  def gift_for(date)
+    gifts.find(self, date)
   end
 
   def send_regular_emails?
