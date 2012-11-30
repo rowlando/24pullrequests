@@ -7,9 +7,9 @@ class DashboardsController < ApplicationController
     projects      = Project.limit(100).sample(12).sort_by(&:name)
     gifted_today  = current_user.gift_for(Time.zone.now.to_date)
 
-    unless gifted_today
-      gift_form = GiftForm.new(:gift => current_user.new_gift,
-                               :pull_requests => pull_requests)
+    if is_decemeber? && !current_user.gift_for(today)
+      gift      = current_user.new_gift
+      gift_form = GiftForm.new(:gift => gift, :pull_requests => pull_requests)
     end
 
     render :show, :locals => { :user => current_user,
@@ -27,6 +27,13 @@ class DashboardsController < ApplicationController
   end
 
   protected
+  def today
+    Time.zone.now.to_date
+  end
+
+  def is_decemeber?
+    today > Date.new(2012,12,1)
+  end
 
   def set_email_preferences
     redirect_to email_path unless current_user.email_frequency.present?

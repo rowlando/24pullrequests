@@ -15,4 +15,5 @@ class PullRequest  < ActiveRecord::Base
       :repo_name      => json['repo']['name']
     }
   end
+
 end

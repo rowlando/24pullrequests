@@ -1,4 +1,4 @@
-$link-color: #bc3b3b;
+@import 'variables.css.scss';
 
 body{
   background-color: #e3e3e3;
@@ -22,7 +22,7 @@ section {
   position: absolute;
   width: 100%;
   height: 600px;
-  background: #a63636 url('/assets/header-snow.png') no-repeat;
+  background: $header-background url('/assets/header-snow.png') no-repeat;
 }
 
 .container-fluid{
@@ -109,7 +109,7 @@ nav {
   }
 
   .nav-pills a {
-    background-color: darken($link-color, 12%);
+    background-color: $nav-pill-background;
 
     &:hover {
       $shadow: inset 0 3px 2px rgba(0,0,0,0.05);
@@ -119,14 +119,14 @@ nav {
               box-shadow: $shadow;
 
       color: #efefef;
-      background-color: darken($link-color, 15%);
+      background-color: $nav-pill-accent;
     }
   }
 
   .nav-pills > .active > a,
   .nav-pills > .active > a:hover {
     color: #efefef;
-    background-color: darken($link-color, 25%);
+    background-color: $nav-pill-active;
   }
 }
 

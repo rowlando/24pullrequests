@@ -16,7 +16,7 @@ class Gift < ActiveRecord::Base
                    :inclusion => { :in => Proc.new { Gift.giftable_dates },
                                    :message => "your gift should be for the month of December." }
 
-  delegate :title, :to => :pull_request, :prefix => true
+  delegate :title, :issue_url, :to => :pull_request, :prefix => true
 
   def initialize(*args)
     result = super
@@ -30,7 +30,7 @@ class Gift < ActiveRecord::Base
   end
 
   def self.giftable_dates
-    1.upto(31).map { |day| Date.new(2012,12,day) }
+    1.upto(24).map { |day| Date.new(2012,12,day) }
   end
 
   def self.default_date
